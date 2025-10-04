@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
+import Header from "./components/layout/header";
 
 import { TRPCReactProvider } from "@/trpc/react";
 
@@ -21,8 +22,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable}`}>
-      <body>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+      <body className="flex min-h-screen flex-col px-20 md:px-32">
+        <TRPCReactProvider>
+          <Header />
+          {children}
+        </TRPCReactProvider>
       </body>
     </html>
   );
