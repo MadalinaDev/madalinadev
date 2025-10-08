@@ -19,7 +19,16 @@ const LandingPage = () => {
         console.log("enterd handleHeaderClick(): ", id)
         switch (id) {
           case "whoami":
-            whoAmIRef.current?.scrollIntoView({ behavior: "smooth" });
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+            break;
+          case "logo":
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
             break;
           case "experience":
             experienceRef.current?.scrollIntoView({ behavior: "smooth" });
