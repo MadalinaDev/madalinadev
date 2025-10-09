@@ -1,23 +1,13 @@
 "use client";
 import { forwardRef } from "react";
-import { Card, CardContent, CardHeader } from "../ui/card";
+import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "../ui/carousel";
 import { Tooltip, TooltipTrigger, TooltipContent } from "../ui/tooltip";
-import Image from "next/image";
 import { ExternalLinkIcon } from "lucide-react";
 import { LuGithub } from "react-icons/lu";
 import Link from "next/link";
-import Autoplay from "embla-carousel-autoplay";
-
-
+import ImagesCarousel from "../layout/imagesCarousel";
 
 const Projects = forwardRef<HTMLDivElement>((props, ref) => {
   const projects = [
@@ -97,55 +87,19 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
     },
   ];
 
-  // ------------ light mode / dark mode switch -------------
-  // ------ make one card per row with display of images on the L, and description of project on the R ---------
-
-
   return (
-    <div ref={ref} className="min-h-140 w-full bg-blue-200">
+    <div ref={ref} className="w-full">
       <div className="text-center">Projects</div>
 
-      <div className="mx-4 grid gap-4 md:grid-cols-2">
-        {projects.map((p) => {
-          const autoplayPlugin = Autoplay({
-            delay: 5000,
-            stopOnMouseEnter: true,
-            stopOnInteraction: false,
-            stopOnLastSnap: false,
-          });
-
-          return (
-            <Card key={p.id}>
-              <CardHeader>
-                <Carousel
-                  key={p.id}
-                  className="mx-10"
-                  plugins={[autoplayPlugin]}
-                >
-                  <CarouselContent>
-                    {p.images.map((i) => (
-                      <CarouselItem key={i.id}>
-                        <div className="animate-scroll-vertical h-100 w-full overflow-visible">
-                          <Image
-                            src={i.src}
-                            alt={i.src + i.id}
-                            width={450}
-                            height={250}
-                            className="overflow-visible object-cover"
-                          />
-                        </div>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </Carousel>
-              </CardHeader>
-              <CardContent>
+      <div className="flex flex-col gap-y-15">
+        {projects.map((p) => (
+          <Card key={p.id}>
+            <CardContent className="flex flex-col md:flex-row gap-2">
+              <ImagesCarousel key={p.id} images={p.images} />
+              <div className="flex-3">
                 <div className="items.center mb-4 flex flex-row items-center justify-between">
-                  <div className="font-semibold text-md">{p.name}</div>
+                  <div className="text-md font-semibold">{p.name}</div>
                   <div className="flex flex-row gap-x-2">
-
                     {/* public vs private github repository */}
                     {p.githubLink ? (
                       <Link
@@ -203,10 +157,10 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
                     ))}
                   </ul>
                 </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   );

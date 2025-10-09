@@ -128,7 +128,7 @@
 /* added vertical scrolling animation for carousel images on project card*/
 @keyframes scroll-vertical {
   0% {
-    transform: translateY(0%);
+    transform: translateY(100%);
   }
   100% {
     transform: translateY(-100%);
