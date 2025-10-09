@@ -52,7 +52,7 @@ const LandingPage = () => {
   return (
     <div className="w-full">
       <Header handleClick={handleHeaderClick} />
-      <div className="flex flex-col gap-y-2 px-10 md:px-32">
+      <div className="flex flex-col gap-y-2 px-10 md:px-32 mx-auto max-w-[1580px] w-full">
         <WhoAmI ref={whoAmIRef} />
         <Experience ref={experienceRef} />
         <Skills ref={skillsRef} />
