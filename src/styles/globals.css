@@ -123,3 +123,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+/* added vertical scrolling animation for carousel images on project card*/
+@keyframes scroll-vertical {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.animate-scroll-vertical {
+  animation: scroll-vertical 6s ease-in-out infinite;
+}
