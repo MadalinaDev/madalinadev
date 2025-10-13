@@ -87,14 +87,18 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
     },
   ];
 
+  //makeup.md/product/508739/
+
   return (
     <div ref={ref} className="w-full">
-      <div className="text-center">Projects</div>
+      <h2 className="text-foreground mb-10 mt-20 text-xl font-bold text-balance text-center md:text-3xl">
+        Projects
+      </h2>
 
       <div className="flex flex-col gap-y-15">
         {projects.map((p) => (
           <Card key={p.id}>
-            <CardContent className="flex flex-col md:flex-row gap-2">
+            <CardContent className="flex flex-col gap-2 md:flex-row">
               <ImagesCarousel key={p.id} images={p.images} />
               <div className="flex-3">
                 <div className="items.center mb-4 flex flex-row items-center justify-between">
