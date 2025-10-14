@@ -6,7 +6,7 @@ import { AuroraText } from "../ui/aurora-text";
 
 const WhoAmI = forwardRef<HTMLDivElement>((props, ref) => {
   return (
-    <section className="md:-pt-10 my-30 mb-100 flex flex-col items-center justify-start pt-40 text-center md:mb-50 md:pt-0">
+    <section className="md:-pt-10 my-30 mb-100 flex flex-col items-center justify-start pt-40 text-center md:mb-60 md:pt-0">
       <AnimatedSection>
         <h1 className="text-foreground text-5xl font-bold tracking-tight lg:text-7xl">
           <span className="font-semibold">I&apos;m </span>

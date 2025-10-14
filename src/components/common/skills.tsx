@@ -125,12 +125,12 @@ const Skills = forwardRef<HTMLDivElement>((props, ref) => {
    );
 
   return (
-    <section ref={ref} className="w-full py-20">
+    <section ref={ref} className="max-w-5xl mx-auto py-20">
         <h2 className="text-foreground mb-10 text-xl font-bold text-balance md:text-3xl">
           Skills
         </h2>
 
-        <div className="space-y-16 mx-0 md:mx-18">
+        <div className="space-y-16">
           {/* technical skills */}
           <div className="flex flex-col md:flex-row w-full justify-center items-center">
             <div className="space-y-8 flex-4 flex flex-col">

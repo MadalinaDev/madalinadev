@@ -5,7 +5,7 @@ export const experienceData = [
   {
     company: "Admin Tools",
     location: "Chisinau, Moldova",
-    role: "Software Engineer",
+    role: "Software Developer",
     duration: "Jan 2025 - June 2025",
     description: [
       "Developed an AI-powered cloud management platform that helps businesses optimize their cloud infrastructure.",
@@ -48,7 +48,7 @@ export const experienceData = [
     company: "HelpShelter",
     location: "Chisinau, Moldova",
     role: "Frontend Developer",
-    duration: "May 2023 - June 2024",
+    duration: "May 2023 - July 2024",
     description: [
       "Developed a responsive frontend for an animal shelters platform using Vue.js and Figma.",
       "Collaborated with a team of 4 to integrate with backend functionality and ensure high-performance design and strong user experience.",

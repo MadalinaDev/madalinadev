@@ -1,13 +1,14 @@
 "use client";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { Tooltip, TooltipTrigger, TooltipContent } from "../ui/tooltip";
-import { ExternalLinkIcon } from "lucide-react";
+import { ExternalLinkIcon, ZoomIn } from "lucide-react";
 import { LuGithub } from "react-icons/lu";
 import Link from "next/link";
 import { Safari } from "../ui/safari";
+import ImageGalleryDialog from "./imageGalleryDialog";
 
 const Projects = forwardRef<HTMLDivElement>((props, ref) => {
   const projects = [
@@ -16,12 +17,20 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
       name: "Animal Shelters Platform",
       description:
         "A platform that connects donors and volunteers with verified animal shelters worldwide. It provides detailed information about each shelter, including donation methods, contact info, and social media links, helping users support animal well-being transparently.",
-      techStack: ["Vue.js", "CSS", "Vuetify", "Figma", "Node.js", "PostgreSQL"],
+      techStack: [
+        "Vue.js",
+        "CSS",
+        "Vuetify",
+        "Figma",
+        "Node.js",
+        "PostgreSQL",
+        "Tailwind CSS",
+      ],
       features: [
-        "Global directory of animal shelters with detailed profiles",
-        "Search and filtering system for shelters by region, type, and size",
-        "Direct donation links to official shelter accounts (no intermediary processing)",
-        "Responsive and accessibility-focused design for all devices",
+        "Created a global directory of animal shelters with detailed profiles",
+        "Implemented search and filtering system for shelters by region, type, and size",
+        "Added direct donation links to official shelter accounts (no intermediary processing)",
+        "Integrated responsive and accessibility-focused design for all devices",
       ],
       githubLink: null,
       websiteLink: "https://help-shelter.com/",
@@ -57,7 +66,7 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
       id: "receiptiq",
       name: "Smart Personal Finance Manager",
       description:
-        "An AI-powered personal finances platform that transforms receipts into spending insights. Users can upload receipts from Republic of Moldova through photos, QR codes, URLs, or manual input. It automatically analyzes, organizes, and visualizes expense statistics to help users better manage their finances.",
+        "An AI-powered personal finances platform that transforms receipts into spending insights and statistics. Users upload receipts from Republic of Moldova via QR codes / URLs / manual input. It automatically analyzes, organizes, and visualizes expense statistic.",
       techStack: [
         "React",
         "Typescript",
@@ -79,26 +88,44 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
       githubLink:
         "https://github.com/MadalinaDev/T3__tax-receipts-financial-monitor",
       websiteLink: "https://besttaxscan.vercel.app/",
+      coverImage: "/receiptiq/cover.png",
       images: [
         {
           id: "1",
           src: "/receiptiq/landing.png",
         },
+        {
+          id: "2",
+          src: "/receiptiq/upload.png",
+        },
+        {
+          id: "3",
+          src: "/receiptiq/receipts.png",
+        },
+        {
+          id: "4",
+          src: "/receiptiq/receipt.png",
+        },
+        {
+          id: "5",
+          src: "/receiptiq/statistics.png",
+        },
       ],
     },
   ];
 
+  const [openGalleryId, setOpenGalleryId] = useState<string | null>(null);
+
   return (
-    <div ref={ref} className="w-full">
-      <h2 className="text-foreground mt-20 mb-10 text-xl font-bold text-balance md:text-3xl">
+    <div ref={ref} className="mx-auto max-w-5xl">
+      <h2 className="text-foreground mt-20 mb-5 text-xl font-bold text-balance md:mb-10 md:text-3xl">
         Projects
       </h2>
 
-      <div className="flex flex-col gap-y-8">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {projects.map((p) => (
-          <Card key={p.id} className="md:mx:40 mx-20">
+          <Card key={p.id} className="">
             <CardContent className="flex flex-col gap-2">
-              <Safari imageSrc={p.coverImage} url={p.websiteLink} />
               <div className="flex-1">
                 <div className="items.center mb-4 flex flex-row items-center justify-between">
                   <div className="text-md font-semibold">{p.name}</div>
@@ -139,7 +166,33 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
                     </Link>
                   </div>
                 </div>
-                <div className="text-justify text-sm">{p.description}</div>
+
+                <div
+                  className="group relative cursor-pointer"
+                  onClick={() => setOpenGalleryId(p.id)}
+                >
+                  <Safari
+                    key={"safari " + p.id}
+                    imageSrc={p.coverImage}
+                    url={p.websiteLink}
+                    className="duration-200 hover:scale-102 hover:cursor-pointer"
+                  />
+
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 duration-400 group-hover:opacity-100">
+                    <ZoomIn className="size-10 rounded-full bg-black/10 p-2 text-white/90" />
+                  </div>
+                </div>
+                <ImageGalleryDialog
+                  key={"gallery " + p.id}
+                  open={openGalleryId === p.id}
+                  onOpenChange={(open) => setOpenGalleryId(open ? p.id : null)}
+                  images={p.images}
+                  title={p.name}
+                />
+
+                <div className="my-3 min-h-25 text-justify text-sm">
+                  {p.description}
+                </div>
                 <div className="my-3">
                   <div className="my-2 font-semibold">Tech Stack</div>
                   <div className="space-y-1 space-x-2">

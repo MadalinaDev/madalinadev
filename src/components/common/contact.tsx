@@ -6,7 +6,7 @@ import { InteractiveHoverButton } from "../ui/interactive-hover-button";
 const Contact = forwardRef<HTMLDivElement>((props, ref) => {
   return (
     <div ref={ref} className="h-50 mx-auto flex justify-center items-center">
-      <InteractiveHoverButton> Get CV </InteractiveHoverButton>
+      <InteractiveHoverButton> Get resume </InteractiveHoverButton>
     </div>
   );
 });
