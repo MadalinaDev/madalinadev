@@ -1,23 +1,34 @@
 "use client";
 import { forwardRef } from "react";
 import { AnimatedSection } from "../layout/animatedSection";
+import { AuroraText } from "../ui/aurora-text";
 
 
 const WhoAmI = forwardRef<HTMLDivElement>((props, ref) => {
   return (
-    <section className="flex my-30 flex-col items-center justify-start pt-40 md:pt-0 md:-pt-10 text-center mb-100 md:mb-50">
+    <section className="md:-pt-10 my-30 mb-100 flex flex-col items-center justify-start pt-40 text-center md:mb-50 md:pt-0">
       <AnimatedSection>
-        <h1 className="text-foreground font-sans text-5xl leading-tight font-bold tracking-tight lg:text-7xl">
-          I&apos;m <span className="">Madalina Chirpicinic</span>
+        <h1 className="text-foreground text-5xl font-bold tracking-tight lg:text-7xl">
+          <span className="font-semibold">I&apos;m </span>
+          <AuroraText
+            speed={1.5}
+            colors={[
+              "#AF47D2",
+              "#8b23adff",
+              "#FFDB00",
+            ]}
+          >
+            Madalina Chirpicinic
+          </AuroraText>
         </h1>
       </AnimatedSection>
       <AnimatedSection delay={0.2}>
-        <p className="text-ring mt-4 font-sans text-3xl font-medium lg:text-5xl">
+        <p className="text-foreground mt-4 text-xl font-medium lg:text-2xl">
           Software Engineer
         </p>
       </AnimatedSection>
       <AnimatedSection delay={0.4}>
-        <p className="text-ring text-md mt-2 text-center font-sans font-medium lg:text-lg">
+        <p className="text-foreground text-md mt-2 text-center font-medium lg:text-lg">
           Turning ideas into intuitive and reliable software.
         </p>
       </AnimatedSection>

@@ -15,7 +15,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
-      <body className="flex min-h-screen flex-col font-mono">
+      <body className="flex min-h-screen flex-col">
         <TRPCReactProvider>
           <ThemeProvider
             attribute="class"

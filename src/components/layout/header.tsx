@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "../ui/button";
-import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { AnimatedThemeToggler } from "../ui/animated-theme-toggler";
+
 
 const Header = ({ handleClick }: { handleClick: (id: string) => void }) => {
   const sections = [
@@ -55,13 +55,7 @@ const Header = ({ handleClick }: { handleClick: (id: string) => void }) => {
               <div className="text-muted-foreground/45 absolute bottom-2 left-1/2 h-0.5 w-0 -translate-x-1/2 transform bg-current transition-all duration-500 group-hover:w-[80%]"></div>{" "}
             </button>
           ))}
-          <Button
-            variant="outline"
-            className="bg-transparent"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          >
-            {theme === "dark" ? <Sun /> : <Moon />}
-          </Button>
+          <AnimatedThemeToggler className="ml-4" duration={600}/>
         </div>
       </div>
     </header>
