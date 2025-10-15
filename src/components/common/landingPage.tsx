@@ -54,9 +54,9 @@ const LandingPage = () => {
       <ContactsPopover />
       <div className="mx-auto flex w-full max-w-[1580px] flex-col gap-y-2 px-10 md:px-32">
         <WhoAmI ref={whoAmIRef} />
+        <Projects ref={projectsRef} />
         <Experience ref={experienceRef} />
         <Skills ref={skillsRef} />
-        <Projects ref={projectsRef} />
         <Contact ref={contactRef} />
       </div>
     </div>

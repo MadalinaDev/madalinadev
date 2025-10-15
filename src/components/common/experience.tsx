@@ -8,9 +8,7 @@ export const experienceData = [
     role: "Software Developer",
     duration: "Jan 2025 - June 2025",
     description: [
-      "Developed an AI-powered cloud management platform that helps businesses optimize their cloud infrastructure.",
-      "Designed and built full-stack features with strong user experience.",
-      "Designed scalable API architecture and database schemas, and integrated automation tools.",
+      "Developed an AI-powered cloud management platform that helps businesses optimize their cloud infrastructure. Designed and built full-stack features with strong UX, designed scalable APIs and schemas, and integrated automation tools, showcasing responsibility and continuous learning."
     ],
     techStack: [
       "Next.js",
@@ -32,8 +30,7 @@ export const experienceData = [
     role: "Software Engineer",
     duration: "Aug 2024 - Dec 2024",
     description: [
-      "Designed and implemented scalable software solutions using modern technologies to enhance performance and user experience.",
-      "Collaborated on feature development, resolved technical challenges, and delivered high-quality, maintainable code.",
+      "Designed and implemented scalable software solutions using modern technologies to enhance performance and UX. Collaborated on feature development, resolved technical challenges, and delivered high-quality, maintainable code."
     ],
     techStack: [
       "Next.js",
@@ -50,8 +47,7 @@ export const experienceData = [
     role: "Frontend Developer",
     duration: "May 2023 - July 2024",
     description: [
-      "Developed a responsive frontend for an animal shelters platform using Vue.js and Figma.",
-      "Collaborated with a team of 4 to integrate with backend functionality and ensure high-performance design and strong user experience.",
+      "Engineered a responsive frontend for an animal shelter platform from predefined Figma designs, demonstrating great attention to detail and collaborating with a team of 4 to integrate backend functionality and ensure high-performance design and strong UX."
     ],
     techStack: [
       "Vue.js",
@@ -102,19 +98,16 @@ const Experience = forwardRef<HTMLDivElement>((props, ref) => {
                     </div>
                   </div>
 
-                  <ul className="space-y-2">
+                  <div className="space-y-2">
                     {experience.description.map((item, i) => (
-                      <li
+                      <div
                         key={i}
                         className="text-muted-foreground flex gap-3 leading-relaxed"
                       >
-                        <span className="text-foreground/40 mt-1.5 flex-shrink-0">
-                          ▹
-                        </span>
-                        <span>{item}</span>
-                      </li>
+                        {item}
+                      </div>
                     ))}
-                  </ul>
+                  </div>
 
                   <div className="flex flex-wrap gap-2 pt-2">
                     {experience.techStack.map((tech, i) => (

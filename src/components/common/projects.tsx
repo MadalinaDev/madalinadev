@@ -118,7 +118,7 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <div ref={ref} className="mx-auto max-w-5xl">
-      <h2 className="text-foreground mt-20 mb-5 text-xl font-bold text-balance md:mb-10 md:text-3xl">
+      <h2 className="text-foreground mt-20 mb-2 text-xl font-bold text-balance md:mb-6 md:text-3xl">
         Projects
       </h2>
 

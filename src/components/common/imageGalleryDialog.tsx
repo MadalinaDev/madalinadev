@@ -1,8 +1,14 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Dialog, DialogContent, DialogTitle, DialogPortal } from "../ui/dialog";
-import { ArrowUp, ArrowDown } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogPortal,
+  DialogClose,
+} from "../ui/dialog";
+import { ArrowUp, ArrowDown, X } from "lucide-react";
 import { Button } from "../ui/button";
 import { Lens } from "../ui/lens";
 
@@ -33,6 +39,7 @@ const ImageGalleryDialog = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
+        showCloseButton={false}
         onOpenAutoFocus={(e) => e.preventDefault()}
         className="min-h-[80%] min-w-7xl"
       >
@@ -91,6 +98,11 @@ const ImageGalleryDialog = ({
               />
             </Lens>
           </div>
+          <DialogClose asChild className="absolute -top-13 -right-2">
+            <button>
+              <X className="size-4 hover:cursor-pointer" />
+            </button>
+          </DialogClose>
         </div>
       </DialogContent>
       <DialogPortal />
