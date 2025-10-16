@@ -52,7 +52,7 @@ const LandingPage = () => {
     <div className="w-full relative">
       <Header handleClick={handleHeaderClick} /> 
       <ContactsPopover />
-      <div className="mx-auto flex w-full max-w-[1580px] flex-col gap-y-2 px-10 md:px-32">
+      <div className="mx-auto flex w-full max-w-[1580px] flex-col gap-y-2 px-5 md:px-32">
         <WhoAmI ref={whoAmIRef} />
         <Projects ref={projectsRef} />
         <Experience ref={experienceRef} />
