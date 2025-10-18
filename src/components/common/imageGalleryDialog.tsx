@@ -65,7 +65,17 @@ const ImageGalleryDialog = ({
           {title}
         </DialogTitle>
 
-        <div className="relative flex w-full flex-col gap-4 md:gap-6 lg:flex-row">
+        <DialogClose asChild className="absolute top-2 right-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-8 w-8 rounded-full p-0"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </DialogClose>
+
+        <div className="relative sticky flex w-full flex-col gap-4 md:gap-6 lg:flex-row">
           <div className="hidden flex-col items-center gap-3 lg:flex">
             <Button
               variant="outline"
@@ -84,15 +94,13 @@ const ImageGalleryDialog = ({
                   key={i.id}
                   onClick={() => setCurrentIndex(index)}
                   className={`my-1 transition-all duration-200 ${
-                    index === currentIndex
-                      ? "ring-primary ring-2 ring-offset-2"
-                      : "opacity-60 hover:opacity-100"
+                    !(index === currentIndex) && "opacity-60 hover:opacity-100"
                   }`}
                 >
                   <img
                     src={i.src}
                     alt={`Thumbnail ${index + 1}`}
-                    className="h-16 w-auto rounded object-contain"
+                    className={`h-16 w-auto rounded object-contain ${index === currentIndex && "border-muted-foreground/30 border"}`}
                   />
                 </button>
               ))}
@@ -140,15 +148,14 @@ const ImageGalleryDialog = ({
                       key={i.id}
                       onClick={() => setCurrentIndex(index)}
                       className={`flex-shrink-0 transition-all duration-200 ${
-                        index === currentIndex
-                          ? "ring-primary scale-110 ring-2 ring-offset-2"
-                          : "opacity-60 hover:opacity-100"
+                        !(index === currentIndex) &&
+                        "opacity-60 hover:opacity-100"
                       }`}
                     >
                       <img
                         src={i.src}
                         alt={`Thumbnail ${index + 1}`}
-                        className="h-12 w-auto rounded object-contain md:h-16"
+                        className={`h-12 w-auto rounded object-contain md:h-16 ${index === currentIndex && "border-muted-foreground/30 border"}`}
                       />
                     </button>
                   ))}
@@ -189,19 +196,6 @@ const ImageGalleryDialog = ({
               </Button>
             </div>
           </div>
-
-          <DialogClose
-            asChild
-            className="absolute -top-24 -right-2 md:-top-22 md:-right-4"
-          >
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-8 w-8 rounded-full p-0"
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </DialogClose>
         </div>
       </DialogContent>
       <DialogPortal />

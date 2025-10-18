@@ -46,7 +46,7 @@ const Header = ({ handleClick }: { handleClick: (id: string) => void }) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setOpenMenu(false);
       }
-    }
+    };
 
     if (openMenu) {
       document.addEventListener("mousedown", handleClickOutside);
@@ -55,10 +55,9 @@ const Header = ({ handleClick }: { handleClick: (id: string) => void }) => {
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [openMenu])
-
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openMenu]);
 
   return (
     <header
@@ -116,7 +115,9 @@ const Header = ({ handleClick }: { handleClick: (id: string) => void }) => {
                   }}
                 />
               ))}
-              <AnimatedThemeToggler duration={600} />
+              <div onClick={() => setOpenMenu(false)}>
+                <AnimatedThemeToggler duration={600} />
+              </div>
             </nav>
           </motion.nav>
         )}

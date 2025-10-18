@@ -9,7 +9,7 @@ const WhoAmI = forwardRef<HTMLDivElement>((props, ref) => {
       <AnimatedSection>
         <h1 className="text-foreground/66 text-3xl font-bold tracking-tight lg:text-7xl">
           <span className="font-semibold">I&apos;m </span>
-          <AuroraText speed={1.5} colors={["#AF47D2", "#8b23adff", "#FFDB00"]}>
+          <AuroraText speed={3} colors={["#5E5E5E", "#c3bfbfff", "#7d7c7cff"]}>
             Madalina Chirpicinic
           </AuroraText>
         </h1>
