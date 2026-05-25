@@ -3,12 +3,56 @@ import { forwardRef } from "react";
 
 export const experienceData = [
   {
-    company: "Admin Tools",
+    company: "Extensive Digital",
     location: "Chisinau, Moldova",
     role: "Software Developer",
-    duration: "Jan 2025 - June 2025",
+    duration: "Feb 2026 - Present",
     description: [
-      "Developed an AI-powered cloud management platform that helps businesses optimize their cloud infrastructure. Designed and built full-stack features with strong UX, designed scalable APIs and schemas, and integrated automation tools, showcasing responsibility and continuous learning."
+      "Lead development of full-stack projects with a focus on e-commerce and sales. Solve clients' real problems and help them convert 10000+ active users into sales through highly UX-focused platforms, strong SEO integration, fast-loading interfaces and an innovative market presence.",
+    ],
+    techStack: [
+      "PHP",
+      "Laravel",
+      "HTML/CSS",
+      "NGinx",
+      "Apache",
+      "Linux",
+      "CodeIgniter",
+      "MySQL",
+      "MongoDB",
+    ],
+  },
+  {
+    company: "Freelance",
+    location: "Remote",
+    role: "Software Developer",
+    duration: "Jul 2025 - Jan 2026",
+    description: [
+      "Implemented full-stack platforms for individual clients — covering testing, debugging and performance optimization. Translated requirements into shipped deliverables under tight deadlines.",
+    ],
+    techStack: [
+      "Next.js",
+      "TypeScript",
+      "PostgreSQL",
+      "Drizzle ORM",
+      "tRPC",
+      "Tailwind CSS",
+      "ShadCN",
+      "Clerk",
+      "Stripe",
+      "Supabase",
+      "Amazon S3",
+      "Docker",
+      "Redux",
+    ],
+  },
+  {
+    company: "Admin Tools",
+    location: "Constanta, Romania",
+    role: "Software Developer",
+    duration: "Jan 2025 - Jun 2025",
+    description: [
+      "Worked with a team on an AI-powered cloud management platform. Built full-stack features with strong UX, designed scalable APIs and schemas, and integrated automation tools.",
     ],
     techStack: [
       "Next.js",
@@ -30,7 +74,7 @@ export const experienceData = [
     role: "Software Engineer",
     duration: "Aug 2024 - Dec 2024",
     description: [
-      "Designed and implemented scalable software solutions using modern technologies to enhance performance and UX. Collaborated on feature development, resolved technical challenges, and delivered high-quality, maintainable code."
+      "Designed and implemented full-stack solutions for clients with a focus on performance and UX.",
     ],
     techStack: [
       "Next.js",
@@ -41,36 +85,23 @@ export const experienceData = [
       "Stripe",
     ],
   },
-  {
-    company: "HelpShelter",
-    location: "Chisinau, Moldova",
-    role: "Frontend Developer",
-    duration: "May 2023 - July 2024",
-    description: [
-      "Engineered a responsive frontend for an animal shelter platform from predefined Figma designs, demonstrating great attention to detail and collaborating with a team of 4 to integrate backend functionality and ensure high-performance design and strong UX."
-    ],
-    techStack: [
-      "Vue.js",
-      "JavaScript",
-      "HTML/CSS",
-      "Tailwind CSS",
-      "REST API",
-      "Axios",
-      "Redux",
-    ],
-  },
 ];
 
 const Experience = forwardRef<HTMLDivElement>((props, ref) => {
   return (
-    <section ref={ref} className="w-full px-6 py-20 md:px-12 lg:px-20">
-      <div className="mx-auto max-w-5xl">
+    <section ref={ref} className="w-full py-20">
+      <div className="mx-auto w-full">
         <h2 className="text-foreground mb-10 text-xl font-bold text-balance md:text-3xl">
           Experience
         </h2>
 
         <div className="relative">
-          <div className="from-muted/80 via-muted to-muted/80 absolute top-0 bottom-0 left-0 hidden w-[2px] bg-gradient-to-b md:block" />
+          {/* base line */}
+          <div className="from-muted/30 via-muted to-muted/30 absolute top-0 bottom-0 left-0 hidden w-[2px] bg-gradient-to-b md:block" />
+          {/* scanning highlight */}
+          <div className="absolute top-0 bottom-0 left-0 hidden w-[2px] overflow-hidden md:block">
+            <div className="animate-timeline-scan from-transparent via-foreground/25 to-transparent absolute h-1/3 w-full bg-gradient-to-b" />
+          </div>
 
           <div className="space-y-12">
             {experienceData.map((experience, index) => (

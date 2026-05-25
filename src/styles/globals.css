@@ -6,6 +6,7 @@
 @theme {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-display: var(--font-playfair), Georgia, serif;
 }
 
 @theme inline {
@@ -180,4 +181,28 @@
 .no-scrollbar {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+}
+
+/* Animated timeline vertical line */
+@keyframes timeline-flow {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+.animate-timeline-line {
+  background-size: 100% 300%;
+  animation: timeline-flow 5s ease-in-out infinite;
+}
+
+/* Scanning highlight on timeline line */
+@keyframes timeline-scan {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translateY(350%); opacity: 0; }
+}
+
+.animate-timeline-scan {
+  animation: timeline-scan 4s linear infinite;
 }

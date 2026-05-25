@@ -61,11 +61,11 @@ const Header = ({ handleClick }: { handleClick: (id: string) => void }) => {
 
   return (
     <header
-      className={`bg-muted-foreground/10 sticky top-0 z-50 flex flex-col items-center justify-center px-12 py-2 transition-all duration-700 ease-out md:flex-row md:justify-between md:px-36 ${
+      className={`bg-muted-foreground/10 sticky top-0 z-50 flex w-full flex-col items-center justify-center py-2 transition-all duration-700 ease-out ${
         fadeIn ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
       }`}
     >
-      <div className="mx-auto flex w-full max-w-[1580px] items-center justify-between">
+      <div className="mx-auto flex w-full max-w-[1450px] items-center justify-between px-5 md:px-20">
         <div
           className="text-md text-foreground/66 hover:text-foreground sticky left-4 font-mono font-semibold duration-300 hover:cursor-pointer"
           onClick={() => handleClick("logo")}
@@ -81,7 +81,10 @@ const Header = ({ handleClick }: { handleClick: (id: string) => void }) => {
               handleClick={() => handleClick(s.id)}
             />
           ))}
-          <AnimatedThemeToggler className="ml-4" duration={600} />
+          <span className="text-muted-foreground/60 font-mono text-sm select-none pl-4 border-l border-muted/40">
+            madalina.dev
+          </span>
+          <AnimatedThemeToggler className="ml-2" duration={600} />
         </nav>
         {/* mobile menu button */}
         <button onClick={() => setOpenMenu((prev) => !prev)}>

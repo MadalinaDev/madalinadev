@@ -20,6 +20,7 @@ export interface SafariProps extends HTMLAttributes<HTMLDivElement> {
   imageSrc?: string;
   videoSrc?: string;
   mode?: SafariMode;
+  priority?: boolean;
 }
 
 export function Safari({
@@ -29,6 +30,7 @@ export function Safari({
   mode = "default",
   className,
   style,
+  priority = false,
   ...props
 }: SafariProps) {
   const hasVideo = !!videoSrc;
@@ -76,9 +78,14 @@ export function Safari({
             borderRadius: "0 0 11px 11px",
           }}
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={imageSrc}
             alt=""
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+            // @ts-expect-error fetchpriority is a valid HTML attr
+            fetchpriority={priority ? "high" : "auto"}
             className="block size-full object-cover object-top"
           />
         </div>

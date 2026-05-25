@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 
 import { type Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Playfair_Display } from "next/font/google";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "next-themes";
@@ -18,11 +18,16 @@ const geist = Geist({
   variable: "--font-geist-sans",
 });
 
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${geist.variable} ${playfair.variable}`} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
         <TRPCReactProvider>
           <ThemeProvider

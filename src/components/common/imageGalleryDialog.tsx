@@ -10,7 +10,6 @@ import {
 } from "../ui/dialog";
 import { ArrowUp, ArrowDown, X, ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "../ui/button";
-import { Lens } from "../ui/lens";
 
 const ImageGalleryDialog = ({
   open,
@@ -24,7 +23,6 @@ const ImageGalleryDialog = ({
   title: string;
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [lensSize, setLensSize] = useState(150);
   const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,15 +34,6 @@ const ImageGalleryDialog = ({
       }
     }
   }, [currentIndex]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setLensSize(window.innerWidth < 768 ? 100 : 150);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -97,6 +86,7 @@ const ImageGalleryDialog = ({
                     !(index === currentIndex) && "opacity-60 hover:opacity-100"
                   }`}
                 >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={i.src}
                     alt={`Thumbnail ${index + 1}`}
@@ -117,18 +107,12 @@ const ImageGalleryDialog = ({
 
           <div className="relative flex flex-1 flex-col items-center justify-center">
             <div className="relative mb-4 flex w-full justify-center">
-              <Lens
-                zoomFactor={2}
-                lensSize={lensSize}
-                isStatic={false}
-                ariaLabel="Zoom Area"
-              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={images[currentIndex]?.src}
                   alt={images[currentIndex]?.src}
                   className="max-h-[50dvh] w-auto rounded-lg object-contain md:max-h-[60dvh]"
                 />
-              </Lens>
             </div>
 
             <div className="flex w-full justify-center md:hidden">
@@ -152,6 +136,7 @@ const ImageGalleryDialog = ({
                         "opacity-60 hover:opacity-100"
                       }`}
                     >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={i.src}
                         alt={`Thumbnail ${index + 1}`}

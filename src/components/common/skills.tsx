@@ -2,7 +2,6 @@
 import { forwardRef } from "react";
 import { IconCloud } from "../ui/icon-cloud";
 
-
 const slugs = [
   "typescript",
   "javascript",
@@ -12,7 +11,6 @@ const slugs = [
   "css",
   "nodedotjs",
   "nextdotjs",
-  "prisma",
   "postgresql",
   "docker",
   "git",
@@ -28,6 +26,13 @@ const slugs = [
   "cplusplus",
   "linux",
   "openai",
+  "php",
+  "laravel",
+  "nginx",
+  "mongodb",
+  "mysql",
+  "bootstrap",
+  "anthropic",
 ];
 
 export const skillsData = {
@@ -38,30 +43,36 @@ export const skillsData = {
         "React.js",
         "Next.js",
         "TypeScript",
-        "ShadCN",
-        "Tailwind CSS",
         "Vue.js",
-        "Ant Design",
         "JavaScript",
         "HTML/CSS",
+        "Tailwind CSS",
+        "ShadCN",
         "Magic UI",
+        "Ant Design",
+        "Bootstrap",
       ],
     },
     backendDevelopment: {
       level: "Intermediate",
       skills: [
+        "PHP",
         "tRPC",
         "Drizzle ORM",
         "PostgreSQL",
         "Docker",
-        "Strapi",
         "Stripe",
-        "Node.js",
         "Linux",
+        "Strapi",
         "OpenAI",
+        "MongoDB",
+        "Nginx",
+        "Laravel",
+        "CodeIgniter",
       ],
     },
     programmingLanguages: [
+      "PHP",
       "TypeScript",
       "JavaScript",
       "C/C++",
@@ -69,14 +80,17 @@ export const skillsData = {
       "Python",
       "Pascal",
     ],
+    aiTools: [
+      "Figma MCP",
+      "Claude",
+      "GitHub Copilot",
+      "v0",
+      "Anthropic API",
+      "AI chat integrations",
+    ],
   },
 
   analyticalAndAlgorithmicSkills: [
-    {
-      name: "Data Structures & Algorithms",
-      description:
-        "proficient in fundamentals with 4+ years of focused study and continuous skill refinement",
-    },
     {
       name: "Competitive programming",
       description: (
@@ -91,15 +105,7 @@ export const skillsData = {
             (account)
           </a>{" "}
           and participated in 50+ online contests, with top 3% ranking in
-          Moldova. LeetCode{" "}
-          <a
-            href="https://leetcode.com/u/pufulet-dev/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline"
-          >
-            (account)
-          </a>{" "}
+          Moldova.
         </div>
       ),
     },
@@ -112,20 +118,19 @@ export const skillsData = {
 };
 
 const Skills = forwardRef<HTMLDivElement>((props, ref) => {
-  
   const images = slugs.map(
     (slug) => `https://cdn.simpleicons.org/${slug}/${slug}`,
   );
 
   return (
-    <section ref={ref} className="mx-auto max-w-5xl py-20">
+    <section ref={ref} className="mx-auto w-full py-20">
       <h2 className="text-foreground mb-10 text-xl font-bold text-balance md:text-3xl">
         Skills
       </h2>
 
       <div className="space-y-16">
         {/* technical skills */}
-        <div className="flex w-full flex-col items-center justify-center md:flex-row">
+        <div className="flex w-full flex-col items-center justify-center gap-8 md:flex-row">
           <div className="flex flex-4 flex-col space-y-8">
             <div className="space-y-4">
               <div className="flex items-baseline gap-3">
@@ -173,7 +178,7 @@ const Skills = forwardRef<HTMLDivElement>((props, ref) => {
               </div>
             </div>
 
-            <div className="space-y-8">
+            <div className="space-y-4">
               <h4 className="text-foreground text-lg font-medium">
                 Programming Languages
               </h4>
@@ -190,6 +195,20 @@ const Skills = forwardRef<HTMLDivElement>((props, ref) => {
                 )}
               </div>
             </div>
+
+            <div className="space-y-4">
+              <h4 className="text-foreground text-lg font-medium">AI Tools</h4>
+              <div className="flex flex-wrap gap-2">
+                {skillsData.technicalExpertise.aiTools.map((tool, i) => (
+                  <span
+                    key={i}
+                    className="bg-muted/50 text-foreground border-muted/30 hover:bg-muted/70 hover:border-foreground/20 rounded-md border px-3 py-1.5 text-sm font-medium transition-all"
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
           <div className="flex-none">
             <IconCloud images={images} />
@@ -198,14 +217,9 @@ const Skills = forwardRef<HTMLDivElement>((props, ref) => {
 
         {/* soft skills */}
         <div className="space-y-6">
-          <div className="flex items-baseline gap-3 my-0 py-0">
-            <h4 className="text-foreground mb-6 text-xl font-semibold">
-              Algorithmic Skills & Achievements
-            </h4>
-            <span className="text-muted-foreground bg-muted/30 border-muted/40 rounded border px-2 py-0.5 font-mono text-sm">
-              {skillsData.technicalExpertise.frontendEngineering.level}
-            </span>
-          </div>
+          <h4 className="text-foreground mb-6 text-xl font-semibold">
+            Algorithmic Skills &amp; Achievements
+          </h4>
           <div className="space-y-4">
             {skillsData.analyticalAndAlgorithmicSkills.map((skill, i) => (
               <div key={i} className="group flex gap-3">
