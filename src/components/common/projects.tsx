@@ -36,13 +36,15 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
       ],
       githubLink: null,
       websiteLink: "https://new.crazyrent.md/",
-      coverImage:
-        "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fnew.crazyrent.md%2F?w=1600",
+      coverImage: "/crazyrent/cover.png",
       images: [
-        {
-          id: "1",
-          src: "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fnew.crazyrent.md%2F?w=1600",
-        },
+        { id: "1", src: "/crazyrent/image.png" },
+        { id: "2", src: "/crazyrent/Screenshot_2.png" },
+        { id: "3", src: "/crazyrent/screencapture-new-crazyrent-md-contacte-2026-05-26-00_01_17.png" },
+        { id: "4", src: "/crazyrent/screencapture-new-crazyrent-md-news-2026-05-26-00_01_44.png" },
+        { id: "5", src: "/crazyrent/screencapture-new-crazyrent-md-account-favorites-2026-05-26-00_02_14.png" },
+        { id: "6", src: "/crazyrent/screencapture-new-crazyrent-md-car-rent-bmw-seria-7-g70-f54ba-2026-05-26-00_02_42.png" },
+        { id: "7", src: "/crazyrent/screencapture-new-crazyrent-md-testimoniale-2026-05-26-00_03_24.png" },
       ],
     },
     {
@@ -70,13 +72,12 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
       ],
       githubLink: null,
       websiteLink: "https://bricomol.md/",
-      coverImage:
-        "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fbricomol.md%2F?w=1600",
+      coverImage: "/bricomol/cover.png",
       images: [
-        {
-          id: "1",
-          src: "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fbricomol.md%2F?w=1600",
-        },
+        { id: "1", src: "/bricomol/screencapture-bricomol-md-2026-05-26-00_21_34.png" },
+        { id: "2", src: "/bricomol/screencapture-bricomol-md-categorie-produs-sisteme-fotovoltaice-solare-invertore-accesorii-2026-05-26-00_22_21.png" },
+        { id: "3", src: "/bricomol/screencapture-bricomol-md-produs-track-sina-magnetica-slim-22mm-incastrata-1m-p-u-proiectoare-magnetice-48v-negru-2026-05-26-00_23_39.png" },
+        { id: "4", src: "/bricomol/screencapture-bricomol-md-cart-2026-05-26-00_24_00.png" },
       ],
     },
     {
@@ -104,13 +105,14 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
       ],
       githubLink: null,
       websiteLink: "https://gustory.md/",
-      coverImage:
-        "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fgustory.md%2F?w=1600",
+      coverImage: "/gustory/cover.png",
       images: [
-        {
-          id: "1",
-          src: "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fgustory.md%2F?w=1600",
-        },
+        { id: "1", src: "/gustory/screencapture-gustory-md-2026-05-26-00_04_31.png" },
+        { id: "2", src: "/gustory/screencapture-gustory-md-our-history-2026-05-26-00_13_49.png" },
+        { id: "3", src: "/gustory/screencapture-gustory-md-catalog-produse-2026-05-26-00_14_46.png" },
+        { id: "4", src: "/gustory/screencapture-gustory-md-b2b-orders-2026-05-26-00_15_55.png" },
+        { id: "5", src: "/gustory/screencapture-gustory-md-contacts-2026-05-26-00_15_37.png" },
+        { id: "6", src: "/gustory/screencapture-gustory-md-product-bors-rosu-traditional-400g-2026-05-26-00_16_33.png" },
       ],
     },
     {
@@ -166,13 +168,9 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
       ],
       githubLink: null,
       websiteLink: "https://meditatii-romana.vercel.app/",
-      coverImage:
-        "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fmeditatii-romana.vercel.app%2F?w=1600",
+      coverImage: "/meditatii-romana/screencapture-meditatii-romana-vercel-app-2026-05-26-00_25_11.png",
       images: [
-        {
-          id: "1",
-          src: "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fmeditatii-romana.vercel.app%2F?w=1600",
-        },
+        { id: "1", src: "/meditatii-romana/screencapture-meditatii-romana-vercel-app-2026-05-26-00_25_11.png" },
       ],
     },
     {
