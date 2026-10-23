@@ -1,39 +1,4 @@
-"use client";
-import { forwardRef } from "react";
-import { IconCloud } from "../ui/icon-cloud";
-
-const slugs = [
-  "typescript",
-  "javascript",
-  "tailwindcss",
-  "react",
-  "html5",
-  "css",
-  "nodedotjs",
-  "nextdotjs",
-  "postgresql",
-  "docker",
-  "git",
-  "github",
-  "python",
-  "strapi",
-  "stripe",
-  "figma",
-  "shadcnui",
-  "vuedotjs",
-  "antdesign",
-  "trpc",
-  "cplusplus",
-  "linux",
-  "openai",
-  "php",
-  "laravel",
-  "nginx",
-  "mongodb",
-  "mysql",
-  "bootstrap",
-  "anthropic",
-];
+import { roomStyle, walls } from "@/lib/rooms";
 
 export const skillsData = {
   technicalExpertise: {
@@ -94,152 +59,92 @@ export const skillsData = {
     {
       name: "Competitive programming",
       description: (
-        <div>
-          solved 600+ problems on Codeforces{" "}
+        <>
+          Solved 600+ problems on{" "}
           <a
             href="https://codeforces.com/profile/Senorita"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline"
+            className="underline decoration-1 hover:decoration-2"
           >
-            (account)
+            Codeforces
+            <span className="sr-only"> (opens in a new tab)</span>
           </a>{" "}
-          and participated in 50+ online contests, with top 3% ranking in
+          and participated in 50+ online contests, with a top 3% ranking in
           Moldova.
-        </div>
+        </>
       ),
     },
     {
       name: "Problem-solving",
       description:
-        "optimizations, debugging, troubleshooting complex technical issues, logical thinking and pattern recognition",
+        "Optimizations, debugging, troubleshooting complex technical issues, logical thinking and pattern recognition.",
     },
   ],
 };
 
-const Skills = forwardRef<HTMLDivElement>((props, ref) => {
-  const images = slugs.map(
-    (slug) => `https://cdn.simpleicons.org/${slug}/${slug}`,
-  );
+const Skills = () => {
+  const { technicalExpertise } = skillsData;
+  const groups = [
+    {
+      title: "Frontend engineering",
+      skills: technicalExpertise.frontendEngineering.skills,
+    },
+    {
+      title: "Backend development",
+      skills: technicalExpertise.backendDevelopment.skills,
+    },
+    {
+      title: "Programming languages",
+      skills: technicalExpertise.programmingLanguages,
+    },
+    { title: "AI tools", skills: technicalExpertise.aiTools },
+  ];
 
   return (
-    <section ref={ref} className="mx-auto w-full py-20">
-      <h2 className="text-foreground mb-10 text-xl font-bold text-balance md:text-3xl">
-        Skills
-      </h2>
+    <section
+      id="skills"
+      data-room
+      aria-labelledby="skills-title"
+      className="room"
+      style={roomStyle(walls.study)}
+    >
+      <div className="mx-auto max-w-[1440px] px-5 py-28 md:px-10 md:py-36 xl:px-20">
+        <h2 id="skills-title" className="text-room font-bold text-balance">
+          Skills
+        </h2>
 
-      <div className="space-y-16">
-        {/* technical skills */}
-        <div className="flex w-full flex-col items-center justify-center gap-8 md:flex-row">
-          <div className="flex flex-4 flex-col space-y-8">
-            <div className="space-y-4">
-              <div className="flex items-baseline gap-3">
-                <h4 className="text-foreground text-lg font-medium">
-                  Frontend Engineering
-                </h4>
-                <span className="text-muted-foreground bg-muted/30 border-muted/40 rounded border px-2 py-0.5 font-mono text-sm">
-                  {skillsData.technicalExpertise.frontendEngineering.level}
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {skillsData.technicalExpertise.frontendEngineering.skills.map(
-                  (skill, i) => (
-                    <span
-                      key={i}
-                      className="bg-muted/50 text-foreground border-muted/30 hover:bg-muted/70 hover:border-foreground/20 rounded-md border px-3 py-1.5 text-sm font-medium transition-all"
-                    >
-                      {skill}
-                    </span>
-                  ),
-                )}
-              </div>
+        <div className="mt-16 grid gap-x-15 gap-y-14 md:mt-20 md:grid-cols-2">
+          {groups.map((group) => (
+            <div key={group.title}>
+              <h3 className="text-xl font-semibold tracking-tight">
+                {group.title}
+              </h3>
+              <p className="text-lede mt-4 max-w-[48ch] font-light text-pretty">
+                {group.skills.join(", ")}
+              </p>
             </div>
-
-            <div className="space-y-4">
-              <div className="flex items-baseline gap-3">
-                <h4 className="text-foreground text-lg font-medium">
-                  Backend Development
-                </h4>
-                <span className="text-muted-foreground bg-muted/30 border-muted/40 rounded border px-2 py-0.5 font-mono text-sm">
-                  {skillsData.technicalExpertise.backendDevelopment.level}
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {skillsData.technicalExpertise.backendDevelopment.skills.map(
-                  (skill, i) => (
-                    <span
-                      key={i}
-                      className="bg-muted/50 text-foreground border-muted/30 hover:bg-muted/70 hover:border-foreground/20 rounded-md border px-3 py-1.5 text-sm font-medium transition-all"
-                    >
-                      {skill}
-                    </span>
-                  ),
-                )}
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="text-foreground text-lg font-medium">
-                Programming Languages
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {skillsData.technicalExpertise.programmingLanguages.map(
-                  (lang, i) => (
-                    <span
-                      key={i}
-                      className="bg-muted/50 text-foreground border-muted/30 hover:bg-muted/70 hover:border-foreground/20 rounded-md border px-3 py-1.5 text-sm font-medium transition-all"
-                    >
-                      {lang}
-                    </span>
-                  ),
-                )}
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="text-foreground text-lg font-medium">AI Tools</h4>
-              <div className="flex flex-wrap gap-2">
-                {skillsData.technicalExpertise.aiTools.map((tool, i) => (
-                  <span
-                    key={i}
-                    className="bg-muted/50 text-foreground border-muted/30 hover:bg-muted/70 hover:border-foreground/20 rounded-md border px-3 py-1.5 text-sm font-medium transition-all"
-                  >
-                    {tool}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="flex-none">
-            <IconCloud images={images} />
-          </div>
+          ))}
         </div>
 
-        {/* soft skills */}
-        <div className="space-y-6">
-          <h4 className="text-foreground mb-6 text-xl font-semibold">
-            Algorithmic Skills &amp; Achievements
-          </h4>
-          <div className="space-y-4">
-            {skillsData.analyticalAndAlgorithmicSkills.map((skill, i) => (
-              <div key={i} className="group flex gap-3">
-                <div className="flex-1">
-                  <h4 className="text-foreground text-lg font-medium">
-                    {skill.name}
-                  </h4>
-                  <div className="text-muted-foreground text-sm leading-relaxed">
-                    {skill.description}
-                  </div>
-                </div>
+        <div className="border-vinyl/20 mt-24 border-t pt-12 md:mt-28 md:pt-16">
+          <h3 className="text-xl font-semibold tracking-tight">
+            Algorithmic skills &amp; achievements
+          </h3>
+          <dl className="mt-8 grid gap-x-15 gap-y-10 md:grid-cols-2">
+            {skillsData.analyticalAndAlgorithmicSkills.map((skill) => (
+              <div key={skill.name}>
+                <dt className="font-semibold">{skill.name}</dt>
+                <dd className="text-lede mt-2 max-w-[48ch] font-light text-pretty">
+                  {skill.description}
+                </dd>
               </div>
             ))}
-          </div>
+          </dl>
         </div>
       </div>
     </section>
   );
-});
-
-Skills.displayName = "Skills";
+};
 
 export default Skills;

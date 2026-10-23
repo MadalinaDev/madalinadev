@@ -1,319 +1,334 @@
 "use client";
-import { forwardRef, useState } from "react";
-import { Card, CardContent } from "../ui/card";
-import { Button } from "../ui/button";
-import { Badge } from "../ui/badge";
-import { ExternalLinkIcon, ZoomIn } from "lucide-react";
-import { LuGithub } from "react-icons/lu";
-import Link from "next/link";
-import { Safari } from "../ui/safari";
+
+import { useState, type ReactNode } from "react";
+import Image from "next/image";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { hostOf, roomStyle, screenCount, type Project } from "@/lib/rooms";
 import ImageGalleryDialog from "./imageGalleryDialog";
+import { projects } from "./projectsData";
 
-const Projects = forwardRef<HTMLDivElement>((props, ref) => {
-  const projects = [
-    {
-      id: "crazyrent",
-      name: "CrazyRent - Car Rental Platform",
-      description:
-        "Booking platform for a car rental company in Chisinau. Customers browse a categorized fleet (Econom / Standard / Business / Lux), pick pickup/return dates with CASCO option, and reserve a vehicle - backed by a CMS-driven car catalogue, promotions and a Google reviews integration.",
-      techStack: [
-        "PHP",
-        "Laravel",
-        "HTML/CSS",
-        "Nginx",
-        "Opcache",
-        "Linux",
-        "CodeIgniter",
-        "MySQL",
-        "MongoDB",
-      ],
-      features: [
-        "Date-range booking flow with insurance options",
-        "Categorized fleet (Econom, Standard, Business, Lux) with detail pages",
-        "Brand pages aggregating cars by manufacturer",
-        "Promotions, discount badges and an FAQ knowledge base",
-        "Multi-language (RO / RU) and SEO-optimized routing",
-      ],
-      githubLink: null,
-      websiteLink: "https://new.crazyrent.md/",
-      coverImage: "/crazyrent/cover.png",
-      images: [
-        { id: "1", src: "/crazyrent/image.png" },
-        { id: "2", src: "/crazyrent/Screenshot_2.png" },
-        { id: "3", src: "/crazyrent/screencapture-new-crazyrent-md-contacte-2026-05-26-00_01_17.png" },
-        { id: "4", src: "/crazyrent/screencapture-new-crazyrent-md-news-2026-05-26-00_01_44.png" },
-        { id: "5", src: "/crazyrent/screencapture-new-crazyrent-md-account-favorites-2026-05-26-00_02_14.png" },
-        { id: "6", src: "/crazyrent/screencapture-new-crazyrent-md-car-rent-bmw-seria-7-g70-f54ba-2026-05-26-00_02_42.png" },
-        { id: "7", src: "/crazyrent/screencapture-new-crazyrent-md-testimoniale-2026-05-26-00_03_24.png" },
-      ],
-    },
-    {
-      id: "bricomol",
-      name: "Bricomol - Electrical E-Commerce",
-      description:
-        "Full e-commerce platform for an electrical equipment retailer in Moldova. Features a large product catalogue (LED profiles, lighting, relays, cable management), cart and checkout, brand pages, blog and customer account - optimized for SEO and conversion.",
-      techStack: [
-        "PHP",
-        "Laravel",
-        "HTML/CSS",
-        "Nginx",
-        "Opcache",
-        "Linux",
-        "CodeIgniter",
-        "MySQL",
-        "MongoDB",
-      ],
-      features: [
-        "Multi-category product catalogue with search and filters",
-        "Cart, wishlist, account and order flow",
-        "Brand and category landing pages optimized for SEO",
-        "Promotions, discount codes and special offers engine",
-        "Editorial blog and content sections (RO / RU)",
-      ],
-      githubLink: null,
-      websiteLink: "https://bricomol.md/",
-      coverImage: "/bricomol/cover.png",
-      images: [
-        { id: "1", src: "/bricomol/screencapture-bricomol-md-2026-05-26-00_21_34.png" },
-        { id: "2", src: "/bricomol/screencapture-bricomol-md-categorie-produs-sisteme-fotovoltaice-solare-invertore-accesorii-2026-05-26-00_22_21.png" },
-        { id: "3", src: "/bricomol/screencapture-bricomol-md-produs-track-sina-magnetica-slim-22mm-incastrata-1m-p-u-proiectoare-magnetice-48v-negru-2026-05-26-00_23_39.png" },
-        { id: "4", src: "/bricomol/screencapture-bricomol-md-cart-2026-05-26-00_24_00.png" },
-      ],
-    },
-    {
-      id: "gustory",
-      name: "Gustory - Ready-to-Eat Food Brand",
-      description:
-        "Brand and product-catalogue website for Gustory, a Moldovan ready-to-eat food line. Showcases the full product range across categories (mains, soups, pastries, salads), brand story, store locator and B2B orders - with rich product imagery and a clean editorial design.",
-      techStack: [
-        "PHP",
-        "Laravel",
-        "HTML/CSS",
-        "Nginx",
-        "Opcache",
-        "Linux",
-        "CodeIgniter",
-        "MySQL",
-        "MongoDB",
-      ],
-      features: [
-        "Filterable product catalogue with category navigation",
-        "Branded story & values section with custom illustrations",
-        "Store locator and B2B orders flow",
-        "Multi-language support (RO / RU)",
-        "CMS-driven content for product updates",
-      ],
-      githubLink: null,
-      websiteLink: "https://gustory.md/",
-      coverImage: "/gustory/cover.png",
-      images: [
-        { id: "1", src: "/gustory/screencapture-gustory-md-2026-05-26-00_04_31.png" },
-        { id: "2", src: "/gustory/screencapture-gustory-md-our-history-2026-05-26-00_13_49.png" },
-        { id: "3", src: "/gustory/screencapture-gustory-md-catalog-produse-2026-05-26-00_14_46.png" },
-        { id: "4", src: "/gustory/screencapture-gustory-md-b2b-orders-2026-05-26-00_15_55.png" },
-        { id: "5", src: "/gustory/screencapture-gustory-md-contacts-2026-05-26-00_15_37.png" },
-        { id: "6", src: "/gustory/screencapture-gustory-md-product-bors-rosu-traditional-400g-2026-05-26-00_16_33.png" },
-      ],
-    },
-    {
-      id: "helpshelter",
-      name: "Animal Shelters Platform",
-      description:
-        "A platform that connects donors and volunteers with verified animal shelters worldwide. It provides detailed information about each shelter, including donation methods, contact info, and social media links, helping users support animal well-being transparently.",
-      techStack: [
-        "Vue.js",
-        "CSS",
-        "Vuetify",
-        "Figma",
-        "Node.js",
-        "PostgreSQL",
-        "Tailwind CSS",
-      ],
-      features: [
-        "Global directory of animal shelters with detailed profiles",
-        "Search and filtering by region, type and size",
-        "Direct donation links to official shelter accounts",
-        "Responsive, accessibility-focused design for all devices",
-      ],
-      githubLink: null,
-      websiteLink: "https://help-shelter.com/",
-      coverImage: "/helpshelter/cover.png",
-      images: [
-        { id: "1", src: "/helpshelter/landing.png" },
-        { id: "2", src: "/helpshelter/shelters.png" },
-        { id: "3", src: "/helpshelter/shelter.png" },
-        { id: "4", src: "/helpshelter/about.png" },
-        { id: "5", src: "/helpshelter/support.png" },
-        { id: "6", src: "/helpshelter/getintouch.png" },
-      ],
-    },
-    {
-      id: "meditatii-romana",
-      name: "Meditatii la Romana - Tutoring Platform",
-      description:
-        "Marketing and booking website for a Romanian language tutor in Nisporeni. Presents tutoring packages, exam prep tracks (Class 9 & Bacalaureat), diction courses and a lead-capture contact form - built with a fast, accessible Next.js stack and dark-mode support.",
-      techStack: [
-        "Next.js",
-        "TypeScript",
-        "Tailwind CSS",
-        "ShadCN",
-        "Framer Motion",
-        "Vercel",
-      ],
-      features: [
-        "Service catalogue with packages and transparent pricing tiers",
-        "Sections for individual lessons, exam prep and diction coaching",
-        "Testimonials, FAQ and lead-capture contact form",
-        "Fully responsive layout with dark/light theme",
-      ],
-      githubLink: null,
-      websiteLink: "https://meditatii-romana.vercel.app/",
-      coverImage: "/meditatii-romana/screencapture-meditatii-romana-vercel-app-2026-05-26-00_25_11.png",
-      images: [
-        { id: "1", src: "/meditatii-romana/screencapture-meditatii-romana-vercel-app-2026-05-26-00_25_11.png" },
-      ],
-    },
-    {
-      id: "receiptiq",
-      name: "Smart Personal Finance Manager",
-      description:
-        "An AI-powered personal finances platform that transforms receipts into spending insights and statistics. Users upload receipts from Republic of Moldova via QR codes, URLs or manual input. It automatically analyzes, organizes and visualizes expense data.",
-      techStack: [
-        "React",
-        "TypeScript",
-        "Next.js",
-        "Tailwind CSS",
-        "tRPC",
-        "PostgreSQL",
-        "Recharts",
-        "Scrape.do",
-        "Clerk",
-      ],
-      features: [
-        "Data scraping from mev.sfs.md for official receipts from Moldova",
-        "AI-driven product categorization using OpenAI with automatic database updates",
-        "Interactive visual statistics using Recharts",
-        "Multiple upload options: QR scan, URL or manual input",
-        "Secure user authentication with Clerk",
-      ],
-      githubLink:
-        "https://github.com/MadalinaDev/T3__tax-receipts-financial-monitor",
-      websiteLink: "https://besttaxscan.vercel.app/",
-      coverImage: "/receiptiq/cover.png",
-      images: [
-        { id: "1", src: "/receiptiq/landing.png" },
-        { id: "2", src: "/receiptiq/upload.png" },
-        { id: "3", src: "/receiptiq/receipts.png" },
-        { id: "4", src: "/receiptiq/receipt.png" },
-        { id: "5", src: "/receiptiq/statistics.png" },
-      ],
-    },
-  ];
+const linkStyles =
+  "cursor-pointer underline decoration-1 underline-offset-[0.22em] hover:decoration-2";
 
-  const [openGalleryId, setOpenGalleryId] = useState<string | null>(null);
+// --- the entrance strip: the cover hung next to the highlighted screens ---
+export const ProjectSnippet = ({
+  project,
+  detailsId,
+}: {
+  project: Project;
+  detailsId: string;
+}) => {
+  const [galleryIndex, setGalleryIndex] = useState<number | null>(null);
+  const { cover } = project;
+  const coverRatio = cover.width / cover.height;
+  const highlights = project.screens
+    .map((screen, index) => ({ screen, index }))
+    .filter(({ screen }) => screen.highlight);
+  // equal heights on wide screens: each column's share is its print's aspect ratio
+  const columns = [coverRatio, ...highlights.map(() => 0.8)]
+    .map((ratio) => `${ratio}fr`)
+    .join(" ");
 
   return (
-    <div ref={ref} className="mx-auto w-full">
-      <h2 className="text-foreground mt-20 mb-6 text-xl font-bold text-balance md:mb-8 md:text-3xl">
-        Projects
-      </h2>
-
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        {projects.map((p, idx) => (
-          <Card
-            key={p.id}
-            className="group border-muted/40 bg-card/50 hover:border-muted-foreground/30 flex flex-col overflow-hidden border transition-all duration-300 hover:shadow-xl"
+    <figure className="mt-14 md:mt-20">
+      <ul
+        className="-mx-5 flex snap-x snap-mandatory scroll-px-5 gap-4 overflow-x-auto px-5 pb-4 md:-mx-10 md:scroll-px-10 md:gap-6 md:px-10 xl:mx-0 xl:grid xl:overflow-visible xl:px-0 xl:pb-0"
+        style={{ gridTemplateColumns: columns }}
+      >
+        <li className="shrink-0 snap-start">
+          <button
+            type="button"
+            onClick={() => setGalleryIndex(0)}
+            aria-label={`View ${project.title}, ${project.screens[0]?.caption ?? "home"}`}
+            className="hang relative block h-52 cursor-zoom-in overflow-hidden bg-white md:h-64 xl:h-auto xl:w-full"
+            style={{ aspectRatio: coverRatio }}
           >
-            <CardContent className="flex h-full flex-col gap-4 p-5">
-              <div
-                className="group/img relative -mx-1 cursor-pointer overflow-hidden rounded-md"
-                onClick={() => setOpenGalleryId(p.id)}
-              >
-                <Safari
-                  key={"safari " + p.id}
-                  imageSrc={p.coverImage}
-                  url={p.websiteLink}
-                  className="duration-300 group-hover/img:scale-[1.02]"
-                  priority={idx < 2}
-                />
-                <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all duration-300 group-hover/img:bg-black/20 group-hover/img:opacity-100">
-                  <ZoomIn className="size-10 rounded-full bg-black/40 p-2 text-white" />
-                </div>
-              </div>
-
-              <ImageGalleryDialog
-                key={"gallery " + p.id}
-                open={openGalleryId === p.id}
-                onOpenChange={(open) => setOpenGalleryId(open ? p.id : null)}
-                images={p.images}
-                title={p.name}
+            <Image
+              src={cover.src}
+              alt={cover.alt}
+              fill
+              priority
+              sizes="(min-width: 1280px) 34rem, 32rem"
+              className="object-cover object-top"
+            />
+          </button>
+        </li>
+        {highlights.map(({ screen, index }) => (
+          <li key={screen.src} className="shrink-0 snap-start">
+            <button
+              type="button"
+              onClick={() => setGalleryIndex(index)}
+              aria-label={`View ${project.title}, ${screen.caption}`}
+              className="hang relative block aspect-[4/5] h-52 cursor-zoom-in overflow-hidden bg-white md:h-64 xl:h-auto xl:w-full"
+            >
+              <Image
+                src={screen.src}
+                alt=""
+                fill
+                sizes="(min-width: 1280px) 14rem, 13rem"
+                className="object-cover object-top"
               />
-
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="text-foreground text-base leading-snug font-semibold md:text-lg">
-                  {p.name}
-                </h3>
-                <div className="flex shrink-0 flex-row gap-2">
-                  {p.githubLink && (
-                    <Link href={p.githubLink} target="_blank" rel="noreferrer">
-                      <Button variant="outline" size="icon" className="h-8 w-8">
-                        <LuGithub />
-                      </Button>
-                    </Link>
-                  )}
-                  <Link
-                    href={p.websiteLink ?? ""}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <Button variant="outline" size="icon" className="h-8 w-8">
-                      <ExternalLinkIcon />
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                {p.description}
-              </p>
-
-              <div className="mt-auto space-y-4 pt-2">
-                <div>
-                  <div className="text-muted-foreground/70 mb-2 font-mono text-[11px] tracking-wider uppercase">
-                    Tech Stack
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {p.techStack.map((b) => (
-                      <Badge
-                        key={b}
-                        variant="outline"
-                        className="bg-muted/40 border-muted/40 text-xs font-normal"
-                      >
-                        {b}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <div className="text-muted-foreground/70 mb-2 font-mono text-[11px] tracking-wider uppercase">
-                    Key Features
-                  </div>
-                  <ul className="text-muted-foreground list-disc space-y-1.5 pl-4 text-sm">
-                    {p.features.map((f) => (
-                      <li key={f}>{f}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            </button>
+          </li>
         ))}
+      </ul>
+      <figcaption className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <span className="text-xl font-semibold tracking-tight">
+          {project.title}
+        </span>
+        <span className="text-vinyl-muted">{project.kind}</span>
+        <span aria-hidden className="text-vinyl-muted">
+          ·
+        </span>
+        <button
+          type="button"
+          onClick={() => setGalleryIndex(0)}
+          className={linkStyles}
+        >
+          View {screenCount(project.screens.length).toLowerCase()}
+        </button>
+        <span aria-hidden className="text-vinyl-muted">
+          ·
+        </span>
+        <a
+          href={`#${detailsId}`}
+          className={cn("inline-flex items-center gap-1", linkStyles)}
+        >
+          Project details
+          <ArrowDown aria-hidden className="size-4" />
+        </a>
+      </figcaption>
+      <ImageGalleryDialog
+        project={project}
+        index={galleryIndex}
+        onIndexChange={setGalleryIndex}
+      />
+    </figure>
+  );
+};
+
+export const ProjectRoom = ({
+  project,
+  id,
+  heading,
+  flip = false,
+}: {
+  project: Project;
+  id?: string;
+  heading?: ReactNode;
+  flip?: boolean;
+}) => {
+  const [galleryIndex, setGalleryIndex] = useState<number | null>(null);
+
+  return (
+    <section
+      id={id ?? project.id}
+      data-room
+      aria-labelledby={`${project.id}-title`}
+      className="room"
+      style={roomStyle(project.wall)}
+    >
+      <div className="mx-auto max-w-[1440px] px-5 py-28 md:px-10 md:py-36 xl:px-20">
+        {heading}
+        <div
+          className={cn(
+            "grid gap-x-15 gap-y-10",
+            heading && "mt-16 md:mt-20",
+            flip
+              ? "xl:grid-cols-[22.5rem_minmax(0,1fr)]"
+              : "xl:grid-cols-[minmax(0,1fr)_22.5rem]",
+          )}
+        >
+          <Hang
+            project={project}
+            onOpen={() => setGalleryIndex(0)}
+            className={cn(flip && "xl:order-2")}
+          />
+          <WallLabel project={project} onOpen={() => setGalleryIndex(0)} />
+        </div>
+        <ProjectNotes project={project} onOpen={setGalleryIndex} />
       </div>
+      <ImageGalleryDialog
+        project={project}
+        index={galleryIndex}
+        onIndexChange={setGalleryIndex}
+      />
+    </section>
+  );
+};
+
+const Hang = ({
+  project,
+  onOpen,
+  className,
+}: {
+  project: Project;
+  onOpen: () => void;
+  className?: string;
+}) => {
+  const { cover } = project;
+  const screens = screenCount(project.screens.length);
+  // tall full-page captures hang cropped to a 16:10 window from the top
+  const ratio = Math.max(cover.width / cover.height, 1.6);
+
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      aria-label={`View ${screens.toLowerCase()} of ${project.title}`}
+      className={cn(
+        "hang group relative block w-full cursor-zoom-in self-start overflow-hidden bg-white",
+        className,
+      )}
+      style={{ aspectRatio: ratio }}
+    >
+      <Image
+        src={cover.src}
+        alt={cover.alt}
+        fill
+        sizes="(min-width: 1280px) 55rem, (min-width: 768px) calc(100vw - 5rem), calc(100vw - 2.5rem)"
+        className="object-cover object-top"
+      />
+      <span
+        aria-hidden
+        className="label-card text-caption absolute bottom-4 left-4 px-3 py-1.5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+      >
+        View {screens.toLowerCase()}
+      </span>
+    </button>
+  );
+};
+
+const WallLabel = ({
+  project,
+  onOpen,
+}: {
+  project: Project;
+  onOpen: () => void;
+}) => {
+  return (
+    <div className="label-card self-start px-6 py-5">
+      <h3
+        id={`${project.id}-title`}
+        className="text-2xl font-bold tracking-tight"
+      >
+        {project.title}
+      </h3>
+      <p className="text-caption mt-1.5">{project.kind}</p>
+      <p className="text-caption mt-3">{project.medium.join(", ")}</p>
+      <p className="text-caption mt-3 flex flex-wrap items-center gap-x-2 gap-y-1">
+        <button type="button" onClick={onOpen} className={linkStyles}>
+          {screenCount(project.screens.length)}
+        </button>
+        <span aria-hidden>·</span>
+        <span>
+          live at{" "}
+          <ExternalLink href={project.websiteLink}>
+            {hostOf(project.websiteLink)}
+          </ExternalLink>
+        </span>
+        {project.githubLink && (
+          <>
+            <span aria-hidden>·</span>
+            <ExternalLink href={project.githubLink}>Source</ExternalLink>
+          </>
+        )}
+      </p>
     </div>
   );
-});
+};
 
-Projects.displayName = "Projects";
+const ExternalLink = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: ReactNode;
+}) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noreferrer"
+    className={cn("inline-flex items-center gap-0.5", linkStyles)}
+  >
+    {children}
+    <ArrowUpRight aria-hidden className="size-3.5" />
+    <span className="sr-only"> (opens in a new tab)</span>
+  </a>
+);
+
+const ProjectNotes = ({
+  project,
+  onOpen,
+}: {
+  project: Project;
+  onOpen: (index: number) => void;
+}) => {
+  return (
+    <div className="mt-24 md:mt-32">
+      <div className="grid gap-x-15 gap-y-12 xl:grid-cols-[minmax(0,1fr)_22.5rem]">
+        <p className="text-lede max-w-[46ch] text-pretty">
+          {project.description}
+        </p>
+        <div>
+          <h4 className="font-semibold">Key features</h4>
+          <ul className="text-vinyl-muted mt-3 space-y-2 leading-relaxed text-pretty">
+            {project.features.map((feature) => (
+              <li key={feature}>{feature}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <ol
+        aria-label={`${project.title} screens`}
+        className="mt-20 grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 xl:grid-cols-6"
+      >
+        {project.screens.map((screen, index) => (
+          <li key={screen.src}>
+            <button
+              type="button"
+              onClick={() => onOpen(index)}
+              className="group block w-full cursor-zoom-in text-left"
+            >
+              <span className="hang relative block aspect-[4/5] overflow-hidden bg-white">
+                <Image
+                  src={screen.src}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1280px) 12rem, (min-width: 768px) 30vw, 45vw"
+                  className="object-cover object-top"
+                />
+              </span>
+              <span className="text-caption mt-3 block decoration-1 underline-offset-[0.22em] group-hover:underline">
+                {screen.caption}
+              </span>
+            </button>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+};
+
+const Projects = () => {
+  return (
+    <>
+      {projects.map((project, index) => (
+        <ProjectRoom
+          key={project.id}
+          project={project}
+          id={index === 0 ? "work" : undefined}
+          flip={index % 2 === 1}
+          heading={
+            index === 0 ? (
+              <h2 className="text-room font-bold text-balance">Work</h2>
+            ) : undefined
+          }
+        />
+      ))}
+    </>
+  );
+};
 
 export default Projects;

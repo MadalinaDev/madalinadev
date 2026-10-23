@@ -1,189 +1,183 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
+import Image from "next/image";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { ArrowLeft, ArrowRight, ArrowUpRight, X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { hostOf, roomStyle, type Project } from "@/lib/rooms";
 import {
   Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogPortal,
   DialogClose,
+  DialogDescription,
+  DialogPortal,
+  DialogTitle,
 } from "../ui/dialog";
-import { ArrowUp, ArrowDown, X, ArrowLeft, ArrowRight } from "lucide-react";
-import { Button } from "../ui/button";
+
+const iconButton =
+  "inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full hover:bg-vinyl/10 [&_svg]:size-5";
 
 const ImageGalleryDialog = ({
-  open,
-  onOpenChange,
-  images,
-  title,
+  project,
+  index,
+  onIndexChange,
 }: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  images: { id: string; src: string }[];
-  title: string;
+  project: Project;
+  index: number | null;
+  onIndexChange: (index: number | null) => void;
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const listRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
+  const count = project.screens.length;
+  const current = index ?? 0;
+  const screen = project.screens[current];
 
+  // --- every screen starts from the top of its page ---
   useEffect(() => {
-    const container = listRef.current;
-    if (container) {
-      const child = container.children[currentIndex] as HTMLElement;
-      if (child) {
-        child.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    }
-  }, [currentIndex]);
+    frameRef.current?.scrollTo({ top: 0 });
+  }, [current]);
 
-  const nextImage = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
-
-  const prevImage = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
+  const go = (step: number) => onIndexChange((current + step + count) % count);
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        showCloseButton={false}
-        onOpenAutoFocus={(e) => e.preventDefault()}
-        className="mx-auto min-h-[80dvh] w-full p-4 md:min-w-5xl md:p-6 lg:min-w-7xl"
-      >
-        <DialogTitle className="mb-4 text-center text-lg font-semibold md:mb-6 md:text-xl">
-          {title}
-        </DialogTitle>
-
-        <DialogClose asChild className="absolute top-2 right-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-8 w-8 rounded-full p-0"
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        </DialogClose>
-
-        <div className="relative sticky flex w-full flex-col gap-4 md:gap-6 lg:flex-row">
-          <div className="hidden flex-col items-center gap-3 lg:flex">
-            <Button
-              variant="outline"
-              className="rounded-full"
-              onClick={prevImage}
-              size="sm"
-            >
-              <ArrowUp className="h-4 w-4" />
-            </Button>
-            <div
-              ref={listRef}
-              className="no-scrollbar flex max-h-[60dvh] flex-col gap-3 overflow-y-auto"
-            >
-              {images.map((i, index) => (
-                <button
-                  key={i.id}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`my-1 transition-all duration-200 ${
-                    !(index === currentIndex) && "opacity-60 hover:opacity-100"
-                  }`}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={i.src}
-                    alt={`Thumbnail ${index + 1}`}
-                    className={`h-16 w-auto rounded object-contain ${index === currentIndex && "border-muted-foreground/30 border"}`}
-                  />
-                </button>
-              ))}
+    <Dialog
+      open={index !== null}
+      onOpenChange={(open) => !open && onIndexChange(null)}
+    >
+      <DialogPortal>
+        <DialogPrimitive.Content
+          className="viewing-room data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0 fixed inset-0 z-50 flex flex-col duration-300 outline-none"
+          style={roomStyle(project.wall)}
+          onOpenAutoFocus={(e) => {
+            e.preventDefault();
+            // there is no DialogTrigger, so remember what opened the room
+            if (document.activeElement instanceof HTMLElement) {
+              openerRef.current = document.activeElement;
+            }
+            frameRef.current?.focus();
+          }}
+          onCloseAutoFocus={(e) => {
+            e.preventDefault();
+            openerRef.current?.focus();
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowRight") go(1);
+            if (e.key === "ArrowLeft") go(-1);
+          }}
+        >
+          <div className="flex items-center justify-between gap-4 px-5 py-4 md:px-10">
+            <div className="min-w-0">
+              <DialogTitle className="truncate text-xl font-bold tracking-tight">
+                {project.title}
+              </DialogTitle>
+              <DialogDescription className="text-caption text-vinyl-muted tabular-nums">
+                {screen?.caption} · {current + 1} of {count}
+              </DialogDescription>
             </div>
-            <Button
-              variant="outline"
-              className="rounded-full"
-              onClick={nextImage}
-              size="sm"
-            >
-              <ArrowDown className="h-4 w-4" />
-            </Button>
+            <div className="flex items-center gap-1 md:gap-2">
+              <a
+                href={project.websiteLink}
+                target="_blank"
+                rel="noreferrer"
+                className="text-caption mr-3 hidden items-center gap-0.5 underline decoration-1 underline-offset-[0.22em] hover:decoration-2 md:inline-flex"
+              >
+                Visit {hostOf(project.websiteLink)}
+                <ArrowUpRight aria-hidden className="size-3.5" />
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+              {count > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => go(-1)}
+                    className={iconButton}
+                  >
+                    <ArrowLeft aria-hidden />
+                    <span className="sr-only">Previous screen</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => go(1)}
+                    className={iconButton}
+                  >
+                    <ArrowRight aria-hidden />
+                    <span className="sr-only">Next screen</span>
+                  </button>
+                </>
+              )}
+              <DialogClose className={iconButton}>
+                <X aria-hidden />
+                <span className="sr-only">Close</span>
+              </DialogClose>
+            </div>
           </div>
 
-          <div className="relative flex flex-1 flex-col items-center justify-center">
-            <div className="relative mb-4 flex w-full justify-center">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={images[currentIndex]?.src}
-                  alt={images[currentIndex]?.src}
-                  className="max-h-[50dvh] w-auto rounded-lg object-contain md:max-h-[60dvh]"
-                />
-            </div>
-
-            <div className="flex w-full justify-center md:hidden">
-              <div className="flex items-center gap-4 md:gap-6">
-                <Button
-                  variant="outline"
-                  className="hidden rounded-full lg:flex"
-                  onClick={prevImage}
-                  size="sm"
-                >
-                  <ArrowLeft className="h-4 w-4" />
-                </Button>
-
-                <div className="flex max-w-full items-center gap-2 overflow-x-auto px-4 py-2 md:gap-3">
-                  {images.map((i, index) => (
+          <div className="flex min-h-0 flex-1 gap-8 px-5 pb-5 md:px-10 md:pb-10">
+            {count > 1 && (
+              <ol
+                aria-label="Screens"
+                className="hidden w-32 shrink-0 flex-col gap-5 overflow-y-auto p-1 lg:flex"
+              >
+                {project.screens.map((item, i) => (
+                  <li key={item.src}>
                     <button
-                      key={i.id}
-                      onClick={() => setCurrentIndex(index)}
-                      className={`flex-shrink-0 transition-all duration-200 ${
-                        !(index === currentIndex) &&
-                        "opacity-60 hover:opacity-100"
-                      }`}
+                      type="button"
+                      onClick={() => onIndexChange(i)}
+                      aria-current={i === current ? "true" : undefined}
+                      className="group block w-full cursor-pointer text-left"
                     >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={i.src}
-                        alt={`Thumbnail ${index + 1}`}
-                        className={`h-12 w-auto rounded object-contain md:h-16 ${index === currentIndex && "border-muted-foreground/30 border"}`}
-                      />
+                      <span
+                        className={cn(
+                          "relative block aspect-[4/5] overflow-hidden bg-white outline-offset-2 transition-opacity",
+                          i === current
+                            ? "outline-vinyl outline-2"
+                            : "opacity-65 group-hover:opacity-100",
+                        )}
+                      >
+                        <Image
+                          src={item.src}
+                          alt=""
+                          fill
+                          sizes="8rem"
+                          className="object-cover object-top"
+                        />
+                      </span>
+                      <span className="mt-2 block text-sm">{item.caption}</span>
                     </button>
-                  ))}
-                </div>
-
-                <Button
-                  variant="outline"
-                  className="hidden rounded-full lg:flex"
-                  onClick={nextImage}
-                  size="sm"
-                >
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
+                  </li>
+                ))}
+              </ol>
+            )}
+            {screen && (
+              <div
+                ref={frameRef}
+                tabIndex={0}
+                aria-label={`${screen.caption}, scroll to read the whole page`}
+                className="hang mx-auto h-full w-full max-w-[70rem] overflow-y-auto overscroll-contain bg-white"
+                style={
+                  screen.scale
+                    ? { maxWidth: screen.width / screen.scale }
+                    : undefined
+                }
+              >
+                <Image
+                  key={screen.src}
+                  src={screen.src}
+                  alt={screen.alt}
+                  width={screen.width}
+                  height={screen.height}
+                  sizes={
+                    screen.scale
+                      ? `${screen.width / screen.scale}px`
+                      : "(min-width: 1280px) 70rem, 100vw"
+                  }
+                  className="block h-auto w-full"
+                />
               </div>
-            </div>
-
-            <div className="mt-4 flex w-full items-center justify-center gap-4 md:gap-6">
-              <Button
-                variant="outline"
-                className="rounded-full lg:hidden"
-                onClick={prevImage}
-                size="sm"
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </Button>
-
-              <span className="min-w-[60px] text-center text-sm font-medium">
-                {currentIndex + 1} / {images.length}
-              </span>
-
-              <Button
-                variant="outline"
-                className="rounded-full lg:hidden"
-                onClick={nextImage}
-                size="sm"
-              >
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </div>
+            )}
           </div>
-        </div>
-      </DialogContent>
-      <DialogPortal />
+        </DialogPrimitive.Content>
+      </DialogPortal>
     </Dialog>
   );
 };

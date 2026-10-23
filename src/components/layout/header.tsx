@@ -1,149 +1,69 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { AnimatedThemeToggler } from "../ui/animated-theme-toggler";
-import { Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
+import { ThemeToggle } from "../ui/theme-toggle";
 
-const Header = ({ handleClick }: { handleClick: (id: string) => void }) => {
-  const sections = [
-    {
-      id: "whoami",
-      name: "Who Am I",
-    },
-    {
-      id: "projects",
-      name: "Projects",
-    },
-    {
-      id: "experience",
-      name: "Experience",
-    },
-    {
-      id: "skills",
-      name: "Skills",
-    },
-    {
-      id: "contact",
-      name: "Contact",
-    },
-  ];
+const sections = [
+  { id: "experience", name: "Experience" },
+  { id: "work", name: "Work" },
+  { id: "skills", name: "Skills" },
+  { id: "enquiries", name: "Enquiries" },
+];
 
-  const [fadeIn, setFadeIn] = useState<boolean>(false);
-  const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+const Header = () => {
+  const [pastTitle, setPastTitle] = useState(false);
 
-  // --- timer for header appearance (fade in) animation ---
+  // --- show the name in the bar once the exhibition title has scrolled away ---
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setFadeIn(true);
-    }, 500);
-    return () => clearTimeout(timer);
+    const title = document.getElementById("exhibition-title");
+    if (!title) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setPastTitle(entry ? !entry.isIntersecting : false),
+      { rootMargin: "-64px 0px 0px 0px" },
+    );
+    observer.observe(title);
+    return () => observer.disconnect();
   }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setOpenMenu(false);
-      }
-    };
-
-    if (openMenu) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [openMenu]);
 
   return (
     <header
-      className={`bg-muted-foreground/10 sticky top-0 z-50 flex w-full flex-col items-center justify-center py-2 transition-all duration-700 ease-out ${
-        fadeIn ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-      }`}
+      id="top"
+      className="wall-transition bg-wall-top text-vinyl sticky top-0 z-40"
     >
-      <div className="mx-auto flex w-full max-w-[1450px] items-center justify-between px-5 md:px-20">
-        <div
-          className="text-md text-foreground/66 hover:text-foreground sticky left-4 font-mono font-semibold duration-300 hover:cursor-pointer"
-          onClick={() => handleClick("logo")}
-        >
-          {"<madalina.dev/>"}
-        </div>
-        {/* desktop links */}
-        <nav className="hidden w-full items-center justify-end gap-x-6 md:flex md:flex-row">
-          {sections.map((s) => (
-            <LinkElement
-              key={s.id}
-              name={s.name}
-              handleClick={() => handleClick(s.id)}
-            />
-          ))}
-          <span className="text-muted-foreground/60 font-mono text-sm select-none pl-4 border-l border-muted/40">
-            madalina.dev
-          </span>
-          <AnimatedThemeToggler className="ml-2" duration={600} />
-        </nav>
-        {/* mobile menu button */}
-        <button onClick={() => setOpenMenu((prev) => !prev)}>
-          {openMenu ? (
-            <X className="hover:cursor-pointer md:hidden" />
-          ) : (
-            <Menu className="hover:cursor-pointer md:hidden" />
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-6 px-5 md:px-10 xl:px-20">
+        <a
+          href="#top"
+          aria-hidden={!pastTitle}
+          tabIndex={pastTitle ? undefined : -1}
+          className={cn(
+            "hidden font-semibold tracking-tight transition-opacity duration-300 md:block",
+            pastTitle ? "opacity-100" : "pointer-events-none opacity-0",
           )}
-        </button>
+        >
+          Madalina Chirpicinic
+        </a>
+        <nav
+          aria-label="Sections"
+          className="ml-auto flex items-center gap-3 md:gap-6"
+        >
+          <ul className="flex items-center gap-4 text-sm md:gap-8 md:text-[0.9375rem]">
+            {sections.map((s) => (
+              <li key={s.id}>
+                <a
+                  href={`#${s.id}`}
+                  className="decoration-1 underline-offset-[0.3em] hover:underline"
+                >
+                  {s.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <ThemeToggle />
+        </nav>
       </div>
-      {/* mobile menu links */}
-      <AnimatePresence>
-        {openMenu && (
-          <motion.nav
-            key="mobileMenu"
-            ref={menuRef}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="bg-muted-foreground/10 absolute top-full left-0 z-40 flex w-full flex-col items-center justify-center pb-3 md:hidden"
-          >
-            <nav className="flex flex-col items-center justify-center">
-              {sections.map((s) => (
-                <LinkElement
-                  key={s.id}
-                  name={s.name}
-                  handleClick={() => {
-                    setOpenMenu(false);
-                    handleClick(s.id);
-                  }}
-                />
-              ))}
-              <div onClick={() => setOpenMenu(false)}>
-                <AnimatedThemeToggler duration={600} />
-              </div>
-            </nav>
-          </motion.nav>
-        )}
-      </AnimatePresence>
     </header>
-  );
-};
-
-const LinkElement = ({
-  name,
-  handleClick,
-}: {
-  name: string;
-  handleClick: () => void;
-}) => {
-  return (
-    <button
-      className="group text-muted-foreground/90 hover:text-foreground relative overflow-hidden px-3 py-2 hover:cursor-pointer"
-      onClick={handleClick}
-    >
-      <span className="relative z-10">{name}</span>
-      <div className="text-foreground absolute bottom-2 left-1/2 h-0.5 w-0 -translate-x-1/2 transform bg-current transition-all duration-500 group-hover:w-[75%]"></div>{" "}
-    </button>
   );
 };
 

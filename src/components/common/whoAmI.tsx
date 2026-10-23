@@ -1,57 +1,56 @@
-"use client";
-import { forwardRef } from "react";
-import { AnimatedSection } from "../layout/animatedSection";
+import { roomStyle, walls } from "@/lib/rooms";
+import { site } from "@/lib/site";
+import { ProjectSnippet } from "./projects";
+import { projects } from "./projectsData";
 
-const WhoAmI = forwardRef<HTMLDivElement>((props, ref) => {
+const WhoAmI = () => {
+  const [featured] = projects;
+
   return (
     <section
-      ref={ref}
-      className="flex min-h-[80vh] w-full flex-col items-start justify-center pt-10 pb-24 md:pt-20 md:pb-32"
+      id="intro"
+      data-room
+      aria-labelledby="exhibition-title"
+      className="room md:min-h-[calc(100svh-4rem)]"
+      style={roomStyle(walls.entrance)}
     >
-      <AnimatedSection>
-        <div className="text-muted-foreground/80 mb-6 flex items-center gap-2 font-mono text-xs tracking-wider uppercase">
-          <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
-          Open for challenges
+      <div className="mx-auto max-w-[1440px] px-5 pt-10 pb-24 md:px-10 md:pt-14 md:pb-28 xl:px-20">
+        <div className="grid gap-x-15 gap-y-10 xl:grid-cols-[minmax(0,1fr)_22.5rem] xl:items-end">
+          <div>
+            <h1
+              id="exhibition-title"
+              className="text-title font-bold text-balance"
+            >
+              Madalina Chirpicinic
+            </h1>
+            <p className="text-subtitle mt-4 max-w-[32ch] font-light text-balance">
+              {site.role}
+            </p>
+          </div>
+          <div className="flex flex-col gap-6">
+            <p className="text-caption text-vinyl-muted text-pretty">
+              I design and ship production systems and modern infrastructure,
+              focused on performance, clean architecture and measurable UX.
+            </p>
+            <p>
+              <a
+                href={`mailto:${site.email}`}
+                className="block text-[clamp(1.125rem,1rem+0.6vw,1.5rem)] leading-snug font-semibold underline decoration-1 underline-offset-[0.2em] hover:decoration-2"
+              >
+                madalina.chirpicinic
+                <wbr />
+                @gmail.com
+              </a>
+              <span className="text-caption text-vinyl-muted mt-1 block">
+                Chișinău, Moldova
+              </span>
+            </p>
+          </div>
         </div>
-      </AnimatedSection>
-
-      <AnimatedSection delay={0.1}>
-        <h1 className="text-foreground text-4xl leading-[1.05] font-semibold tracking-tight md:text-6xl lg:text-7xl">
-          Madalina Chirpicinic
-        </h1>
-      </AnimatedSection>
-
-      <AnimatedSection delay={0.2}>
-        <h2 className="text-muted-foreground mt-4 max-w-3xl text-xl leading-tight font-light md:text-3xl lg:text-4xl">
-          Full-stack engineer building{" "}
-          <span className="text-foreground font-normal">
-            fast, thoughtful web products
-          </span>{" "}
-          end&#8209;to&#8209;end.
-        </h2>
-      </AnimatedSection>
-
-      <AnimatedSection delay={0.35}>
-        <p className="text-muted-foreground/90 mt-8 max-w-2xl text-base leading-relaxed md:text-lg">
-          I design and ship production
-          systems and modern infrastructure - focused on performance, clean architecture and
-          measurable UX.
-        </p>
-      </AnimatedSection>
-
-      <AnimatedSection delay={0.5}>
-        <div className="text-muted-foreground mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-sm">
-          <span>Chisinau, MD</span>
-          <span className="text-muted-foreground/40">/</span>
-          <span>Remote-friendly</span>
-          <span className="text-muted-foreground/40">/</span>
-          <span>2+ years building software</span>
-        </div>
-      </AnimatedSection>
+        {featured && <ProjectSnippet project={featured} detailsId="work" />}
+      </div>
     </section>
   );
-});
-
-WhoAmI.displayName = "WhoAmI";
+};
 
 export default WhoAmI;
